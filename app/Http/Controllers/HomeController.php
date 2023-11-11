@@ -10,4 +10,12 @@ class HomeController extends Controller
         return view('biodata');
     }
 
+    public function index(){
+        return view('pages.dashboard');
+    }
+
+    public function profile(){
+        return view('pages.profile');
+    }
+
 }

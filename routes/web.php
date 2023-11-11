@@ -19,3 +19,7 @@ Route::get('/', function () {
 });
 
 Route::get('/biodata', [HomeController::class, 'biodata']);
+
+Route::get('/index', [HomeController::class, 'index'])->name('index');
+
+Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
