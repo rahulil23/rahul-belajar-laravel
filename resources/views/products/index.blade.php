@@ -54,11 +54,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($viewData as $row)
+                                @forelse ($products as $row)
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>{{ $row['product_name'] }}</td>
-                                    <td>{{ $row['category_name'] }}</td>
+                                    <td>{{ $row['category_id'] }}</td>
                                     <td>{{ $row['product_code'] }}</td>
                                     <td>{{ $row['description'] }}</td>
                                     <td>{{ $row['price'] }}</td>
@@ -101,7 +101,7 @@
                         </table>
                         <div class="card-footer clearfix">
                             <ul class="pagination pagination-sm m-0 float-right">
-                                {{ $viewData->links() }}
+                                {{ $products->links() }}
                             </ul>
                         </div>
                     </div>

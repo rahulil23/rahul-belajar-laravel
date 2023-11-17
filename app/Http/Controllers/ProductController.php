@@ -16,14 +16,14 @@ class ProductController extends Controller
         $search = $request->input('search', '');
         $limit = 4;
 
-        $viewData = view_data::when($search, function ($query, $search) {
+        $products = Product::when($search, function ($query, $search) {
             $query->where('product_name', 'like', "%$search%")
-                ->orWhere('category_name', 'like', "%$search%")
+                ->orWhere('category_id', 'like', "%$search%")
                 ->orWhere('description', 'like', "%$search%");
         })
             ->simplepaginate($limit);
 
-        return view('products.index', compact('viewData', 'search'));
+        return view('products.index', compact('products', 'search'));
     }
 
     public function delete($id)
