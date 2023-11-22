@@ -1,5 +1,5 @@
-@extends('layout.main')
-
+@extends('layouts.main')
+@section('title', 'Update Produk')
 @section('content')
 <div class="content-header">
     <div class="container-fluid">

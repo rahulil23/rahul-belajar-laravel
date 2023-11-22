@@ -1,5 +1,5 @@
-@extends('layout.main')
-
+@extends('layouts.main')
+@section('title', 'Data Produk')
 @section('content')
 <div class="content-header">
     <div class="container-fluid">
@@ -58,7 +58,7 @@
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>{{ $row['product_name'] }}</td>
-                                    <td>{{ $row['category_id'] }}</td>
+                                    <td>{{ $row['category_name'] }}</td>
                                     <td>{{ $row['product_code'] }}</td>
                                     <td>{{ $row['description'] }}</td>
                                     <td>{{ $row['price'] }}</td>

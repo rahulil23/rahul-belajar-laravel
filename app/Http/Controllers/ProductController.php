@@ -18,9 +18,12 @@ class ProductController extends Controller
 
         $products = Product::when($search, function ($query, $search) {
             $query->where('product_name', 'like', "%$search%")
-                ->orWhere('category_id', 'like', "%$search%")
-                ->orWhere('description', 'like', "%$search%");
+                ->orWhere('products.category_id', 'like', "%$search%")
+                ->orWhere('description', 'like', "%$search%")
+                ->orWhere('product_categories.category_name', 'like', "%$search%");
         })
+            ->join('product_categories', 'products.category_id', '=', 'product_categories.id')
+            ->select('products.*', 'product_categories.id AS category_id', 'product_categories.category_name')
             ->simplepaginate($limit);
 
         return view('products.index', compact('products', 'search'));
@@ -74,8 +77,9 @@ class ProductController extends Controller
         $imagePaths = [];
         if ($request->hasFile('product_image')) {
             foreach ($request->file('product_image') as $image) {
-                $imagePath = $image->store('uploads', 'public');
-                $imagePaths[] = $imagePath;
+                $filename = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('uploads'), $filename);
+                $imagePaths[] = 'uploads/' . $filename;
             }
         }
 
@@ -99,7 +103,7 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'product_image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-    
+
         // Proses data formulir
         $data = $request->only([
             'product_name',
@@ -108,32 +112,43 @@ class ProductController extends Controller
             'description',
             'price',
         ]);
-    
+
         // Menangani upload gambar
         $imagePaths = [];
         if ($request->hasFile('product_image')) {
             foreach ($request->file('product_image') as $image) {
-                $imagePath = $image->store('uploads', 'public');
-                $imagePaths[] = $imagePath;
+                $filename = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('uploads'), $filename);
+                $imagePaths[] = 'uploads/' . $filename;
             }
         }
-    
+
         // Menambahkan path gambar ke data sebagai string
         $data['image'] = json_encode($imagePaths);
-    
+
         // Mengupdate produk menggunakan model Eloquent
         $product = Product::find($id);
         $product->update($data);
-    
+
         return redirect()->route('products.index')->with('success', 'Produk berhasil diupdate.');
     }
+
 
     public function editForm($id)
     {
         $product = Product::find($id);
         $categories = ProductCategory::all();
-    
+
         return view('products.edit', compact('product', 'categories'));
+    }
+
+    public function list()
+    {
+        $product = DB::table('products')
+            ->select('products.*', 'product_categories.id AS category_id', 'product_categories.category_name')
+            ->join('product_categories', 'products.category_id', '=', 'product_categories.id')
+            ->orderBy('products.id', 'DESC')->get();
+        return view('products.list', ['products' => $product]);
     }
 
     // Other methods (create, update, delete) can be implemented similarly

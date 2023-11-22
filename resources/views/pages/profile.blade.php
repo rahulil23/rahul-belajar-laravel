@@ -1,5 +1,5 @@
-@extends('layout.main')
-
+@extends('layouts.main')
+@section('title', 'Profile')
 @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header">
