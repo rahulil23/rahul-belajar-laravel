@@ -55,12 +55,14 @@ class ProductController extends Controller
     public function create(Request $request)
     {
         // Validasi formulir
-        $request->validate([
-            'product_name' => 'required|string',
+        $validated = $request->validate([
+            'product_name' => 'required|string|max:255',
             'category_id' => 'required|integer',
-            'product_code' => 'required|string',
+            'product_code' => 'required|string|unique:products,product_code',
             'description' => 'required|string',
-            'price' => 'required|numeric',
+            'price' => 'required|numeric|min:0',
+            'discount_amount' => 'nullable|numeric|min:0', 
+            'stock' => 'required|integer|min:0', 
             'product_image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -71,6 +73,8 @@ class ProductController extends Controller
             'product_code',
             'description',
             'price',
+            'discount_amount',
+            'stock',
         ]);
 
         // Menangani upload gambar
@@ -92,15 +96,18 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Produk berhasil dibuat.');
     }
 
+
     public function update(Request $request, $id)
     {
         // Validasi formulir
-        $request->validate([
-            'product_name' => 'required|string',
+        $validated = $request->validate([
+            'product_name' => 'required|string|max:255',
             'category_id' => 'required|integer',
-            'product_code' => 'required|string',
+            'product_code' => 'required|string|unique:products,product_code,' . $id,
             'description' => 'required|string',
-            'price' => 'required|numeric',
+            'price' => 'required|numeric|min:0',
+            'discount_amount' => 'nullable|numeric|min:0', 
+            'stock' => 'required|integer|min:0', 
             'product_image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -111,6 +118,8 @@ class ProductController extends Controller
             'product_code',
             'description',
             'price',
+            'discount_amount',
+            'stock',
         ]);
 
         // Menangani upload gambar
@@ -132,6 +141,7 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with('success', 'Produk berhasil diupdate.');
     }
+
 
 
     public function editForm($id)

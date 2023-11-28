@@ -58,6 +58,16 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="discount_amount">Discount Amount (optional)</label>
+                            <input type="number" class="form-control" id="discount_amount" name="discount_amount" value="{{ old('discount_amount', $product->discount_amount) }}" min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stock">Stock</label>
+                            <input type="number" class="form-control" id="stock" name="stock" value="{{ old('stock', $product->stock) }}" required min="0">
+                        </div>
+
+                        <div class="form-group">
                             <label for="product_image">Product Image</label>
                             <input type="file" class="form-control-file" id="product_image" name="product_image[]" multiple>
                         </div>

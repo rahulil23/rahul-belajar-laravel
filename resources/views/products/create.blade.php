@@ -52,6 +52,14 @@
                             <input type="number" name="price" id="price" class="form-control" placeholder="Harga" required>
                         </div>
                         <div class="form-group">
+                            <label for="discount_amount">Diskon (opsional):</label>
+                            <input type="number" name="discount_amount" id="discount_amount" class="form-control" placeholder="Diskon" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="stock">Stok:</label>
+                            <input type="number" name="stock" id="stock" class="form-control" placeholder="Stok" required min="0">
+                        </div>
+                        <div class="form-group">
                             <label for="product_image">Product Image</label>
                             <input type="file" class="form-control-file" id="product_image" name="product_image[]" multiple>
                         </div>

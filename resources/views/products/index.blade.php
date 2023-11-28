@@ -49,6 +49,8 @@
                                     <th>Kode produk</th>
                                     <th>deskripsi</th>
                                     <th>Harga</th>
+                                    <th>Diskon</th>
+                                    <th>Stok</th>
                                     <th>Gambar</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -62,6 +64,14 @@
                                     <td>{{ $row['product_code'] }}</td>
                                     <td>{{ $row['description'] }}</td>
                                     <td>{{ $row['price'] }}</td>
+                                    <td>
+                                        @if ($row['discount_amount'] !== null)
+                                            {{ $row['discount_amount'] }} %
+                                        @else
+                                            N/A
+                                        @endif
+                                    </td>
+                                    <td>{{ $row['stock'] }}</td>
                                     <td>
                                         @if ($row['image'] === null)
                                             Gambar tidak tersedia
@@ -94,6 +104,8 @@
                                     <th>Kode produk</th>
                                     <th>deskripsi</th>
                                     <th>Harga</th>
+                                    <th>Stok</th>
+                                    <th>Gambar</th>
                                     <th>Gambar</th>
                                     <th>Aksi</th>
                                 </tr>
