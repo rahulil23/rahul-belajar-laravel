@@ -24,17 +24,15 @@ Route::get('/', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Route::middleware('auth')->group(function () {
+// Route::middleware('auth','level:user')->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'level:admin')->group(function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
     Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
-    Route::get('/admin', [HomeController::class, 'admin'])->name('admin');
-    Route::get('/user', [HomeController::class, 'user'])->name('user');
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     Route::delete('/products/{id}', [ProductController::class, 'delete'])->name('products.delete');
     Route::get('/products/create', [ProductController::class, 'createForm'])->name('products.createForm');
@@ -45,8 +43,10 @@ Route::middleware('auth')->group(function () {
 
 
 
+Route::middleware('auth', 'level:user')->group(function () {
+    Route::get('list-produk', [ProductController::class, 'list'])->name('list-produk');
+});
 
-Route::get('list-produk', [ProductController::class, 'list'])->name('list-produk');
 
 
 require __DIR__ . '/auth.php';

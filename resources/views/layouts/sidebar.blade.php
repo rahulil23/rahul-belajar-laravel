@@ -11,12 +11,20 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+            <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="/profile" class="d-block">Muhammad Rahulil</a>
+            <a href="/profile" class="d-block">
+                {{ Auth::user()->name }} <!-- Tampilkan nama pengguna -->
+    
+                @if($isAdmin)
+                    <span class="badge badge-success">Admin</span>
+                @elseif($isUser)
+                    <span class="badge badge-primary">User</span>
+                @endif
+            </a>
         </div>
-      </div>
+    </div>
 
       <!-- SidebarSearch Form -->
       <div class="form-inline">
@@ -33,8 +41,7 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+          @if($isAdmin)
           <li class="nav-item">
             <a href="{{ route('dashboard') }}" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -43,6 +50,7 @@
               </p>
             </a>
           </li>
+          @endif
           <li class="nav-item">
             <a href="{{ route('profile') }}" class="nav-link">
               <i class="nav-icon far fa-image"></i>
@@ -51,22 +59,7 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="{{ route('admin') }}" class="nav-link">
-              <i class="nav-icon far fa-image"></i>
-              <p>
-                Admin
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ route('user') }}" class="nav-link">
-              <i class="nav-icon far fa-image"></i>
-              <p>
-                User
-              </p>
-            </a>
-          </li>
+          @if($isAdmin)
           <li class="nav-item">
             <a href="{{ route('products.index') }}" class="nav-link">
               <i class="nav-icon far fa-image"></i>
@@ -75,6 +68,8 @@
               </p>
             </a>
           </li>
+          @endif
+          @if($isUser)
           <li class="nav-item">
             <a href="{{ route('list-produk') }}" class="nav-link">
               <i class="nav-icon far fa-image"></i>
@@ -83,6 +78,7 @@
               </p>
             </a>
           </li>
+          @endif
           <li class="nav-item">
             <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="nav-icon fas fa-times"></i>
